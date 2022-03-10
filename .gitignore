@@ -30,3 +30,6 @@ hs_err_pid*
 
 # Eclipse settings
 .settings
+
+# bin folder
+bin
