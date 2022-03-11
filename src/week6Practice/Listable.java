@@ -1,6 +1,6 @@
 package week6Practice;
 
-public interface Listable<E> {
+public interface Listable {
 	//return size of ArrayList object
 	public int size();
 	
@@ -8,14 +8,14 @@ public interface Listable<E> {
 	public boolean isEmpty();
 	
 	//returns element at index i
-	public E get(int i) throws IndexOutOfBoundsException;
+	public int get(int i) throws IndexOutOfBoundsException;
 	
 	//sets element e at index i
-	public void set(E e, int i) throws IndexOutOfBoundsException;
+	public void set(int e, int i) throws IndexOutOfBoundsException;
 	
 	//adds element e to index i, shifts all subsequent elements
-	public void add(E  e, int i) throws IndexOutOfBoundsException;
+	public void add(int  e, int i) throws IndexOutOfBoundsException;
 	
 	//removes and returns element at index i
-	public E remove(int i) throws IndexOutOfBoundsException;
+	public int remove(int i) throws IndexOutOfBoundsException;
 }
