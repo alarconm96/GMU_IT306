@@ -16,14 +16,14 @@ public interface List {
     /** Inserts element e to be at index i, shifting all subsequent elements later **/
     void add(int i, int e) throws IndexOutOfBoundsException;
 
-    /** Removes/returns the elememt at index i, shifting subsequent elements earlier **/
+    /** Removes/returns the element at index i, shifting subsequent elements earlier **/
     int remove(int i) throws IndexOutOfBoundsException;
     
     /* 
     This method copies the array into a new array with
     a size that is greater than its current size, and 
     replaces the original array with the new one. You 
-    may choose to implmement either a constant or 
+    may choose to implement either a constant or 
     doubling algorithm. If the array is uncreated, then 
     throws IllegalStateException.
     */
@@ -45,7 +45,6 @@ public interface List {
     */
     int capacity() throws IllegalStateException;
     
-    /// sorts the array list s
+    // sorts the array list
     void quickSort();
-
 }

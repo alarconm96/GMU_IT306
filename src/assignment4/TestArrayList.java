@@ -64,7 +64,7 @@ public class TestArrayList {
             myList.add(0,17);
             assertTrue("Test1.8c", myList.size() == 17);
             
-            String s = "Before Sortng: ";
+            String s = "Before Sorting: ";
             for(int i=0; i< myList.size();i++ ){
                s += myList.get(i) + " ";
             }

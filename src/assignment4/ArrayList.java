@@ -1,4 +1,5 @@
 package assignment4;
+import java.util.Random;
 public class ArrayList implements List {
 
     public static final int CAPACITY = 16;
@@ -105,8 +106,50 @@ public class ArrayList implements List {
 		}
     	return data.length;
     }
+    
+    //public quicksort method to be called by user
     public void quickSort(){
-      //TODO - implement quicksort algorithm
+    	//TODO - implement quicksort algorithm
+    	if (size > 1)
+    		quickSort(data, 0, size-1);
+    }
+    
+    //private quicksort method using subarray parameters
+    private void quickSort(int[] arr, int low, int high) {
+    	int pivot = partition(arr, low, high);
+    	if (pivot-1 > low)
+    		quickSort(arr, low, pivot-1);
+    	if (pivot < high)
+    		quickSort(arr, pivot, high);
+    }
+    
+    private void swap(int[] arr, int low, int high) {
+    	int tmp = low;
+    	arr[low] = arr[high];
+    	arr[high] = tmp;
+    }
+    
+    private int partition(int[] arr, int low, int high) {
+    	//randomly choose pivot for initial partition
+    	Random rand = new Random();
+    	int pivot = arr[rand.nextInt((high - low) + low)];
+    	//while-loop until low and high indexes meet
+    	while (low <= high) {
+			//find index of element less than pivot to swap
+    		while (arr[low] < pivot)
+				low++;
+    		//find index of element greater than pivot to swap
+			while (arr[high] > pivot)
+				high--;
+			//swap once misplaced elements are found
+			if (low <= high) {
+				swap(arr, low, high);
+				low++;
+				high--;
+			}
+		}
+    	//returns new partition index
+    	return low;
     }
 
 }
