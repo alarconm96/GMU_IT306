@@ -108,13 +108,13 @@ public class ArrayList implements List {
     }
     
     //public quicksort method to be called by user
+    //only runs if more than one element in array
     public void quickSort(){
-    	//TODO - implement quicksort algorithm
     	if (size > 1)
     		quickSort(data, 0, size-1);
     }
     
-    //private quicksort method using subarray parameters
+    //private quicksort method that recursively calls itself for each partition
     private void quickSort(int[] arr, int low, int high) {
     	int pivot = partition(arr, low, high);
     	if (pivot-1 > low)
@@ -123,12 +123,14 @@ public class ArrayList implements List {
     		quickSort(arr, pivot, high);
     }
     
+    //private method to swap low and high indexes
     private void swap(int[] arr, int low, int high) {
     	int tmp = low;
     	arr[low] = arr[high];
     	arr[high] = tmp;
     }
     
+    //private method to partition sub-array
     private int partition(int[] arr, int low, int high) {
     	//randomly choose pivot for initial partition
     	Random rand = new Random();
