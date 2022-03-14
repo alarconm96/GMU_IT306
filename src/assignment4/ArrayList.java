@@ -1,46 +1,52 @@
+/*
+ * Marco Alarcon
+ * IT 306-002
+ * March 16, 2022
+ * */
 package assignment4;
 import java.util.Random;
 public class ArrayList implements List {
-
+	//instance vars
     public static final int CAPACITY = 16;
     protected int[] data;
     protected int size = 0;
-
+    
+    //default constructor
     public ArrayList() { this(CAPACITY); }
-
+    //constructor with parameterized capacity
     public ArrayList(int capacity) {
         data = new int[capacity];
     }
-
+    
+    //return ArrayList object's size
     public int size() {
-        //size of ArrayList
-        return size; // stub code
+        return size;
     }
-
+    
+    //check if ArrayList object is empty
     public boolean isEmpty() {
         //check if empty
-        return size == 0; // stub code
+        return size == 0;
     }
 
+    //returns element at index i, but does not remove
     public int get(int i) throws IndexOutOfBoundsException {
-        //return element at index i
     	checkIndex(i, size);
-        return data[i]; // stub code
+        return data[i];
     }
 
+    //replace element at index i with new element; return old element
     public int set(int i, int e) throws IndexOutOfBoundsException {
-        //replace element at index i with new element; return old element
     	checkIndex(i, size);
     	int replaced = data[i];
     	data[i] = e;
         return replaced; // stub code
     }
 
-    public void add(int i, int e) throws IndexOutOfBoundsException, IllegalStateException {
-        //adds element to index i; pushes subsequent elements down
+    //adds element to index i; pushes subsequent elements down
+    public void add(int i, int e) throws IndexOutOfBoundsException, IllegalStateException {   
     	checkIndex(i, size+1);
     	if (size == data.length) {
-    		//TODO - change to add capacity to array
     		increaseCapacity();
 		}
     	for (int j = size-1; j > i; j--) {
@@ -50,8 +56,8 @@ public class ArrayList implements List {
     	size++;
     }
 
+    //remove and return element at index i
     public int remove(int i) throws IndexOutOfBoundsException {
-        //remove and return element at index i
     	checkIndex(i, size);
     	int e = data[i];
     	for (int j = i+1; j < data.length; j++) {
@@ -65,15 +71,15 @@ public class ArrayList implements List {
     
     //SPECIAL PURPOSE METHODS
     
+    //verify index is within bounds
     protected void checkIndex(int i, int n) throws IndexOutOfBoundsException {
-        //verify index is within bounds
     	if (i < 0 || i >= n) {
 			throw new IndexOutOfBoundsException("Illegal index: " + i);
 		}
     }
     
+    //replaces array with new array of double size if full
     public void increaseCapacity() throws IllegalStateException {
-        //replaces array with new array of double size if full
     	if (data == null) {
 			throw new IllegalStateException("Array does not exist");
 		}
@@ -84,8 +90,8 @@ public class ArrayList implements List {
     	this.data = newArr;
     }
 
+    //trims empty elements from data array
     public void minimize() throws IllegalStateException {
-        //trims empty elements from data array
     	if (data == null) {
 			throw new IllegalStateException("Array does not exist");
 		}
@@ -99,8 +105,8 @@ public class ArrayList implements List {
     	data = newArr;
     }
 
+    //returns length of array object (not size)
     public int capacity() throws IllegalStateException {
-        //returns length of array object (not size)
         if (data == null) {
 			throw new IllegalStateException("Array does not exist");
 		}
@@ -108,8 +114,8 @@ public class ArrayList implements List {
     }
     
     //public quicksort method to be called by user
-    //only runs if more than one element in array
     public void quickSort(){
+    	//only runs if more than one element in array
     	if (size > 1)
     		quickSort(data, 0, size-1);
     }
@@ -125,7 +131,7 @@ public class ArrayList implements List {
     
     //private method to swap low and high indexes
     private void swap(int[] arr, int low, int high) {
-    	int tmp = low;
+    	int tmp = arr[low];
     	arr[low] = arr[high];
     	arr[high] = tmp;
     }
