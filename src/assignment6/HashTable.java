@@ -32,7 +32,10 @@ public class HashTable extends ArrayList{
 	}
     
     // compute and return the compressed hash index 
-    private int compressHashCode(){return 0;}
+    private int compressHashCode(int h1){
+    	int hash = h1 % capacity;
+    	return hash;
+    }
     
     // return the index for a key.  
     public int findSlot(int k){return 0;}
