@@ -24,7 +24,11 @@ public class HashTable extends ArrayList{
     
     // compute and return hash code given the key
     private int computeHashCode(String key){
-    	return 0;
+    	int ascii = 0;
+    	for (int i = 0; i < key.length(); i++) {
+			ascii += (int) key.charAt(i);
+		}
+    	return ascii;
 	}
     
     // compute and return the compressed hash index 
