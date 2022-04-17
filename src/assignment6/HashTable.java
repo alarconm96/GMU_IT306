@@ -45,11 +45,15 @@ public class HashTable extends ArrayList{
     }
     
     // return the value associated with key K
-    public String tableSearch(String K){return null;}
+    public String tableSearch(String k){
+    	int index = compressHashCode(computeHashCode(k));
+    	checkIndex(index, size);
+    	return data[index].getValue();
+    }
     // inserts the value associated with key K  
-    public String tableInsert(String K) {return null;}
+    public String tableInsert(String k) {return null;}
     //remove the value associated with key K  
-    public String tableRemove(String K) {return null;}
+    public String tableRemove(String k) {return null;}
     //print the content of the table
     public void tablePrint(){}
     
