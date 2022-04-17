@@ -38,7 +38,11 @@ public class HashTable extends ArrayList{
     }
     
     // return the index for a key.  
-    public int findSlot(int k){return 0;}
+    public int findSlot(String k){
+    	int index = compressHashCode(computeHashCode(k));
+    	checkIndex(index, size);
+    	return index;
+    }
     
     // return the value associated with key K
     public String tableSearch(String K){return null;}
