@@ -57,6 +57,9 @@ public class HashTable extends ArrayList{
     // inserts the value associated with key K  
     // if collision, probe each element linearly until available element is found
     public String tableInsert(String k) {
+    	if (size == capacity) {
+			throw new IllegalStateException("Table is at maximum capacity - remove an element before inserting a new one");
+		}
     	int index = compressHashCode(computeHashCode(k));
     	checkIndex(index, capacity);
     	Entry e = new Entry(Integer.toString(index), k);
