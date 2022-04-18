@@ -13,30 +13,30 @@ public class ArrayList{
     //initialize data array of type E[] and set the capacity
     public ArrayList(int capacity) {
        super();
-       data = new Entry[capacity];
+       this.data = new Entry[capacity];
        this.capacity = capacity;
     }
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return this.size == 0;
     }
 
     //check if index valid, then return element at index i
     public Entry get(int i) throws IndexOutOfBoundsException {
     	//System.out.println("get element");
-    	checkIndex(i, size);
-        return data[i];
+    	checkIndex(i, this.size);
+        return this.data[i];
     }
 
     //check if index valid, then replace old element with new element, finally return old element
     public Entry set(int i, Entry e) throws IndexOutOfBoundsException {
-    	checkIndex(i, size);
-    	Entry replaced = data[i];
-    	data[i] = e;
+    	checkIndex(i, this.size);
+    	Entry replaced = this.data[i];
+    	this.data[i] = e;
     	return replaced;
     }
 
