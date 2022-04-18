@@ -6,7 +6,7 @@ public class HashTable extends ArrayList{
     private int collisions; // counts the total number of collisions during insertion
 
     public HashTable(int capacity){
-      ArrayList table = new ArrayList(capacity);  
+      super(capacity); 
     }
     
     //Returns true if location is either empty or the defunct sentinel
