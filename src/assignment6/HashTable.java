@@ -15,7 +15,7 @@ public class HashTable extends ArrayList{
     
     //Returns true if location is either empty or the defunct sentinel
     private boolean isAvailable(int j) {
-    	checkIndex(j, size);
+    	checkIndex(j, capacity);
     	if (data[j] == null || data[j].equals(DEFUNCT)) {
 			return true;
 		}
@@ -40,24 +40,60 @@ public class HashTable extends ArrayList{
     // return the index for a key.  
     public int findSlot(String k){
     	int index = compressHashCode(computeHashCode(k));
-    	checkIndex(index, size);
+    	checkIndex(index, capacity);
     	return index;
     }
     
     // return the value associated with key K
     public String tableSearch(String k){
     	int index = compressHashCode(computeHashCode(k));
-    	checkIndex(index, size);
+    	checkIndex(index, capacity);
     	return data[index].getValue();
     }
-    // inserts the value associated with key K  
-    public String tableInsert(String k) {return null;}
-    //remove the value associated with key K  
-    public String tableRemove(String k) {return null;}
-    //print the content of the table
-    public void tablePrint(){}
     
-    //read from file input and return String
+    // inserts the value associated with key K  
+    // if collision, probe each element linearly until available element is found
+    public String tableInsert(String k) {
+    	int index = compressHashCode(computeHashCode(k));
+    	checkIndex(index, capacity);
+    	Entry e = new Entry(Integer.toString(index), k);
+    	if (isAvailable(index)) {
+			set(index, e);
+			numElement++;
+		}else {
+			while (!isAvailable(index)) {
+				collisions++;
+				index = ++index % capacity;
+				checkIndex(index, capacity);
+				if (isAvailable(index)) {
+					set(index, e);
+					numElement++;
+					break;
+				}
+			}
+		}
+    	return k;
+    }
+    
+    //remove the value associated with key K  
+    public String tableRemove(String k) {
+    	return null;
+	}
+    
+    //print the content of the table
+    public void tablePrint(){
+    	System.out.println("Printing table");
+    	System.out.print("[");
+    	for (int i = 0; i < data.length; i++) {
+			System.out.printf("%s", data[i].getValue());
+			if (i < data.length - 1) {
+				System.out.print(",");
+			}
+		}
+    	System.out.println("]");
+    }
+    
+    //read from file input and return String (maybe move to main method?)
     private String read(String file) throws FileNotFoundException {
     	Scanner sc = new Scanner(new FileReader("HashTable.csv"));
     	String input = "";
