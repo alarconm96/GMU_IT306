@@ -1,9 +1,5 @@
 package assignment6;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Scanner;
-
 public class HashTable extends ArrayList{
     private static int numElement;
     private Entry DEFUNCT = new Entry(null, null); // sentinel for deleted item
@@ -54,7 +50,7 @@ public class HashTable extends ArrayList{
     	return data[index].getValue();
     }
     
-    // inserts the value associated with key K  
+    // inserts the value associated with key K if table is not full
     // if collision, probe each element linearly until available element is found
     public String tableInsert(String k) {
     	if (size == capacity) {
@@ -88,7 +84,9 @@ public class HashTable extends ArrayList{
     	if (tableSearch(k) == null) {
 			throw new IllegalArgumentException("Element " + k + " does not exist");
 		}
-    	return set(index, DEFUNCT).getValue();
+    	Entry replaced = set(index, DEFUNCT);
+    	numElement--;
+    	return replaced.getValue();
 	}
     
     //print the content of the table
@@ -104,14 +102,19 @@ public class HashTable extends ArrayList{
     	System.out.println("]");
     }
     
-    //read from file input and return String (maybe move to main method?)
-    private String read(String file) throws FileNotFoundException {
-    	Scanner sc = new Scanner(new FileReader("HashTable.csv"));
-    	String input = "";
-    	while (sc.hasNext()) {
-			input+= sc.nextLine() + "\n";
-		}
-    	return input;
+    public int getNumElements() {
+    	return HashTable.numElement;
     }
     
+    public int getCollisions() {
+    	return this.collisions;
+    }
+    
+    public void numElements() {
+    	System.out.printf("Number of elements in table: %d%n", getNumElements());
+    }
+    
+    public void numCollisions() {
+    	System.out.printf("Number of collisions: %d%n", getCollisions());
+    }
 }  
