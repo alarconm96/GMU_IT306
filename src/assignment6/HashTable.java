@@ -48,6 +48,9 @@ public class HashTable extends ArrayList{
     public String tableSearch(String k){
     	int index = compressHashCode(computeHashCode(k));
     	checkIndex(index, capacity);
+    	if (data[index] == null || data[index].equals(DEFUNCT)) {
+			return null;
+		}
     	return data[index].getValue();
     }
     
@@ -77,7 +80,12 @@ public class HashTable extends ArrayList{
     
     //remove the value associated with key K  
     public String tableRemove(String k) {
-    	return null;
+    	int index = compressHashCode(computeHashCode(k));
+    	checkIndex(index, capacity);
+    	if (tableSearch(k) == null) {
+			throw new IllegalArgumentException("Element " + k + " does not exist");
+		}
+    	return set(index, DEFUNCT).getValue();
 	}
     
     //print the content of the table
