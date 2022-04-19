@@ -28,45 +28,34 @@ public class ArrayList{
     //check if index valid, then return element at index i
     public Entry get(int i) throws IndexOutOfBoundsException {
     	//System.out.println("get element");
-    	checkIndex(i, this.size);
+    	checkIndex(i, this.capacity);
         return this.data[i];
     }
 
     //check if index valid, then replace old element with new element, finally return old element
     public Entry set(int i, Entry e) throws IndexOutOfBoundsException {
-    	checkIndex(i, this.size);
+    	checkIndex(i, this.capacity);
     	Entry replaced = this.data[i];
     	this.data[i] = e;
     	return replaced;
     }
 
-    //check if index is valid & array is not full, then shift elements right starting from right to curr index
-    public void add(int i, Entry e) throws IndexOutOfBoundsException, IllegalStateException {
-    	//System.out.println("add element");
-    	checkIndex(i, size + 1); 
-    	if (size == data.length) throw new IllegalStateException("Array is full");
-    	for (int j = size - 1; j >= i; j--)  // start by shifting to the rightmost
-    		data[j+1] = data[j];
-		data[i] = e; // add new element at index i
-		size++;
-    }
-
-    public Entry remove(int i) throws IndexOutOfBoundsException {
-    	//System.out.println("remove element");
-    	checkIndex(i, size);
-    	Entry removed = data[i];
-    	for (int j = i; j < size - 1; j++) { // shift down for a removal at index i 
-    		data[j] = data[j+1];
-    	}
-    	data[size - 1] = null;
-    	size--;
-        return removed; 
-    }
+    
    
     //check if index is within array bounds
     protected void checkIndex(int i, int n) throws IndexOutOfBoundsException {
     	//System.out.println("check index: i = " + i + " n = " + n);
         if (i < 0 || i >= n) throw new IndexOutOfBoundsException("Illegal index: " + i);
+    }
+    
+    //overridden toString
+    public String toString() {
+    	System.out.println("Printing HashTable Contents");
+    	String s = "";
+    	for (int i = 0; i < this.data.length; i++) {
+			System.out.printf("[%d] %s%n", i+1, get(i));
+		}
+    	return s;
     }
     
     //nested Entry class
@@ -81,13 +70,31 @@ public class ArrayList{
         }
 
         // methods of the Entry interface
-        public String getKey() { return k; }
-        public String getValue() { return v; }
+        public String getKey() {
+        	if (this != null && this.k == null) {
+				return "DEFUNCT";
+			}else if (this.k == null) {
+				return "null";
+			}
+        	return k;
+    	}
+        public String getValue() {
+        	if (this != null && this.v == null) {
+				return "DEFUNCT";
+			}else if (this.v == null) {
+				return "null";
+			}
+        	return this.v;
+    	}
 
         // utilities not exposed as part of the Entry interface
         protected void setKey(String key) { k = key; }
         protected void setValue(String value) { v = value; }
       
+        public String toString() {
+        	String entry = String.format("Key: %s || %s", this.getKey(), this.getValue());
+        	return entry;
+        }
       
     }
 
