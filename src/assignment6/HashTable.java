@@ -27,6 +27,7 @@ public class HashTable extends ArrayList{
     	return ascii;
 	}
     
+    //EXTRA CREDIT - compute polynomial hashcode
     private int computePolyHashCode(String key) {
     	int ascii = 0;
     	for (int i = 0; i < key.length(); i++) {
@@ -45,6 +46,13 @@ public class HashTable extends ArrayList{
     // return the index for a key.  
     public int findSlot(String k){
     	int index = compressHashCode(computeHashCode(k));
+    	checkIndex(index, capacity);
+    	return index;
+    }
+    
+    //EXTRA CREDIT - return index for key using polynomial hashing
+    public int findPolySlot(String k){
+    	int index = compressHashCode(computePolyHashCode(k));
     	checkIndex(index, capacity);
     	return index;
     }
