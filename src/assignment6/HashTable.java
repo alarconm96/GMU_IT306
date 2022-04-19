@@ -104,6 +104,33 @@ public class HashTable extends ArrayList{
     	return k;
     }
     
+    //EXTRA CREDIT - insert value associated with key k, assuming table is not full
+    //if collision, probe each element linearly until available slot is found
+    public String tablePolyInsert(String k, String v) {
+    	if (size == capacity) {
+			throw new IllegalStateException("Table is at maximum capacity - remove an element before inserting a new one");
+		}
+    	int index = compressHashCode(computePolyHashCode(k));
+    	checkIndex(index, capacity);
+    	Entry e = new Entry(k, v);
+    	if (isAvailable(index)) {
+			set(index, e);
+			numElement++;
+		}else {
+			while (!isAvailable(index)) {
+				collisions++;
+				index = ++index % capacity;
+				checkIndex(index, capacity);
+				if (isAvailable(index)) {
+					set(index, e);
+					numElement++;
+					break;
+				}
+			}
+		}
+    	return k;
+    }
+    
     //remove the value associated with key K  
     public String tableRemove(String k) {
     	if (getNumElements() == 0) {
@@ -112,6 +139,21 @@ public class HashTable extends ArrayList{
     	int index = compressHashCode(computeHashCode(k));
     	checkIndex(index, capacity);
     	if (tableSearch(k) == null) {
+			throw new IllegalArgumentException("Element " + k + " does not exist");
+		}
+    	Entry replaced = set(index, DEFUNCT);
+    	numElement--;
+    	return replaced.getKey();
+	}
+    
+    //EXTRA CREDIT - remove the value associated with key k using polynomial hashing
+    public String tablePolyRemove(String k) {
+    	if (getNumElements() == 0) {
+			throw new IllegalStateException("Table is empty - no elements to remove");
+		}
+    	int index = compressHashCode(computePolyHashCode(k));
+    	checkIndex(index, capacity);
+    	if (tablePolySearch(k) == null) {
 			throw new IllegalArgumentException("Element " + k + " does not exist");
 		}
     	Entry replaced = set(index, DEFUNCT);
