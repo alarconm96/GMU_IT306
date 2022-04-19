@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT 306-002
+ * April 19, 2022
+ * Assignment 6
+ * */
 package assignment6;
 
 public class ArrayList{
@@ -48,7 +54,7 @@ public class ArrayList{
         if (i < 0 || i >= n) throw new IndexOutOfBoundsException("Illegal index: " + i);
     }
     
-    //overridden toString
+    //overridden toString to print table contents
     public String toString() {
     	System.out.println("Printing HashTable Contents");
     	String s = "";
@@ -91,6 +97,7 @@ public class ArrayList{
         protected void setKey(String key) { k = key; }
         protected void setValue(String value) { v = value; }
       
+        //overridden toString prints key and value of Entry
         public String toString() {
         	String entry = String.format("Key: %s || %s", this.getKey(), this.getValue());
         	return entry;
