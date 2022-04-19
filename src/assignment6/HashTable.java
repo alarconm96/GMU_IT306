@@ -167,7 +167,6 @@ public class HashTable extends ArrayList{
     }
     
     public void printTableStats() {
-    	numElements();
     	numCollisions();
     }
     
