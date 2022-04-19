@@ -164,6 +164,9 @@ public class HashTable extends ArrayList{
     //TODO - implement toString from ArrayList
     public void tablePrint(){
     	this.toString();
+    }
+    
+    public void printTableStats() {
     	numElements();
     	numCollisions();
     }
