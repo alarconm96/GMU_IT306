@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT 306-002
+ * April 19, 2022
+ * Assignment 6
+ * */
 package assignment6;
 
 import java.io.File;
@@ -8,25 +14,26 @@ public class TestHashTable {
     public static void main(String[] args) {    	
     	final int CAPACITY = 37;
     	
-        //hash table to use ASCII sum hashing
+        //hash table to use basic ASCII sum hashing
     	HashTable HT = new HashTable(CAPACITY);
     	
-    	//hash table to use polynomial hashing
+    	//hash table to use polynomial ASCII hashing
         HashTable polyHT = new HashTable(CAPACITY);
     	
-    	//read from csv file
+    	//read from HashTable.csv file
     	try {
 			File file = new File("HashTable.csv");
 			Scanner sc = new Scanner(file);
 			while (sc.hasNextLine()) {
+				//split values using comma
 				String[] line = sc.nextLine().split(",");
 				
-				//get rid of byte order mark (BOM) on UTF-8 csv file
+				//get rid of byte order mark (BOM) on UTF-8 .csv file
 				if (line[0].length() > 1) {
 					line[0] = line[0].substring(line[0].length()-1);
 				}
 				
-				//query HashTable depending on command
+				//query HT and polyHT using commands from first line[] element
 				switch (line[0]) {
 				case "I":
 					//insert into HT
@@ -69,7 +76,6 @@ public class TestHashTable {
 						String removed = HT.tableRemove(line[1]);
 						System.out.printf("Element %s removed%n", removed);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						System.out.println(e.getMessage());
 					}
 					//remove from polyHT
@@ -77,7 +83,6 @@ public class TestHashTable {
 						String polyRemoved = polyHT.tablePolyRemove(line[1]);
 						System.out.printf("Element %s removed (polynomial)%n", polyRemoved);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						System.out.println(e.getMessage());
 					}
 					break;
@@ -87,7 +92,6 @@ public class TestHashTable {
 			}
 			sc.close();
 		} catch (FileNotFoundException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}   
     	
@@ -97,8 +101,10 @@ public class TestHashTable {
     	System.out.println("");
     	polyHT.tablePrint();
     	
-    	//compare HT and polyHT collisions
-    	System.out.println("\nComparing Base HashTable and Polynomial HashTable Statistics");
+    	//EXTRA CREDIT - compare HT and polyHT collisions
+    	System.out.println("");
+    	System.out.println("EXTRA CREDIT");
+    	System.out.println("Comparing Base HashTable and Polynomial HashTable Statistics");
     	System.out.print("Base: ");
     	HT.printTableStats();
     	System.out.print("Polynomial: ");
