@@ -91,9 +91,18 @@ public class TestHashTable {
 			e.printStackTrace();
 		}   
     	
-    	//print HashTable
+    	//print HT and polyHT contents
     	System.out.println("");
     	HT.tablePrint();
+    	System.out.println("");
+    	polyHT.tablePrint();
+    	
+    	//compare HT and polyHT collisions
+    	System.out.println("\nComparing Base HashTable and Polynomial HashTable Statistics");
+    	System.out.print("Base: ");
+    	HT.printTableStats();
+    	System.out.print("Polynomial: ");
+    	polyHT.printTableStats();
     }
 
 }
