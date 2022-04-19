@@ -67,6 +67,16 @@ public class HashTable extends ArrayList{
     	return data[index].getKey();
     }
     
+    //EXTRA CREDIT - return the value associated with key k using polynomial hashing
+    public String tablePolySearch(String k){
+    	int index = compressHashCode(computePolyHashCode(k));
+    	checkIndex(index, capacity);
+    	if (data[index] == null || data[index].equals(DEFUNCT)) {
+			return null;
+		}
+    	return data[index].getKey();
+    }
+    
     // inserts the value associated with key K if table is not full
     // if collision, probe each element linearly until available element is found
     public String tableInsert(String k, String v) {
