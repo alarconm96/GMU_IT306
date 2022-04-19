@@ -27,6 +27,15 @@ public class HashTable extends ArrayList{
     	return ascii;
 	}
     
+    private int computePolyHashCode(String key) {
+    	int ascii = 0;
+    	for (int i = 0; i < key.length(); i++) {
+			int n = (int) key.charAt(i);
+			ascii+= n^(i+1);
+		}
+    	return ascii;
+    }
+    
     // compute and return the compressed hash index 
     private int compressHashCode(int h1){
     	int hash = h1 % capacity;
