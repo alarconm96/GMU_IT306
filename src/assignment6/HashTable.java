@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT 306-002
+ * April 19, 2022
+ * Assignment 6
+ * */
 package assignment6;
 
 public class HashTable extends ArrayList{
@@ -161,11 +167,12 @@ public class HashTable extends ArrayList{
     	return replaced.getKey();
 	}
     
-    //TODO - implement toString from ArrayList
+    //prints table contents using overridden toString()
     public void tablePrint(){
     	this.toString();
     }
     
+    //prints collisions that have occurred so far with current table
     public void printTableStats() {
     	numCollisions();
     }
