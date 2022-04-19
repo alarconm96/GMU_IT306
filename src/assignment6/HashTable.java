@@ -47,18 +47,18 @@ public class HashTable extends ArrayList{
     	if (data[index] == null || data[index].equals(DEFUNCT)) {
 			return null;
 		}
-    	return data[index].getValue();
+    	return data[index].getKey();
     }
     
     // inserts the value associated with key K if table is not full
     // if collision, probe each element linearly until available element is found
-    public String tableInsert(String k) {
+    public String tableInsert(String k, String v) {
     	if (size == capacity) {
 			throw new IllegalStateException("Table is at maximum capacity - remove an element before inserting a new one");
 		}
     	int index = compressHashCode(computeHashCode(k));
     	checkIndex(index, capacity);
-    	Entry e = new Entry(Integer.toString(index), k);
+    	Entry e = new Entry(k, v);
     	if (isAvailable(index)) {
 			set(index, e);
 			numElement++;
@@ -79,6 +79,9 @@ public class HashTable extends ArrayList{
     
     //remove the value associated with key K  
     public String tableRemove(String k) {
+    	if (getNumElements() == 0) {
+			throw new IllegalStateException("Table is empty - no elements to remove");
+		}
     	int index = compressHashCode(computeHashCode(k));
     	checkIndex(index, capacity);
     	if (tableSearch(k) == null) {
@@ -86,20 +89,14 @@ public class HashTable extends ArrayList{
 		}
     	Entry replaced = set(index, DEFUNCT);
     	numElement--;
-    	return replaced.getValue();
+    	return replaced.getKey();
 	}
     
-    //print the content of the table
+    //TODO - implement toString from ArrayList
     public void tablePrint(){
-    	System.out.println("Printing table");
-    	System.out.print("[");
-    	for (int i = 0; i < data.length; i++) {
-			System.out.printf("%s", data[i].getValue());
-			if (i < data.length - 1) {
-				System.out.print(",");
-			}
-		}
-    	System.out.println("]");
+    	this.toString();
+    	numElements();
+    	numCollisions();
     }
     
     public int getNumElements() {
