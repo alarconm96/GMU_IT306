@@ -53,13 +53,36 @@ public class GraphExamples {
     };
     return graphFromEdgelist(edges, true);
   }
-
+  
+  //creates graph1 and returns edgelist
+  public static Graph<String,Integer> Graph1() {
+	    String[][] edges = {
+	      {"A", "E"}, {"A", "F"}, {"A", "B"}, {"B", "A"}, {"B", "F"}, {"B", "C"}, {"C", "B"}, 
+	      {"C", "G"}, {"C", "D"}, {"D", "C"}, {"D", "G"}, {"D", "H"}, {"E", "A"}, {"E", "F"}, 
+	      {"E", "I"}, {"F", "E"}, {"F", "I"}, {"F", "A"}, {"F", "B"}, {"G", "C"}, {"G", "D"}, {"G", "J"}, {"G", "K"}, {"G", "L"}, 
+	      {"H", "D"}, {"H", "L"}, {"I", "E"}, {"I", "F"}, {"I", "J"}, {"I", "M"}, {"I", "N"}, 
+	      {"J", "I"}, {"J", "G"}, {"J", "K"}, {"K", "J"}, {"K", "G"}, {"K", "N"}, {"K", "O"}, 
+	      {"L", "G"}, {"L", "H"}, {"L", "P"}, {"M", "I"}, {"M", "N"}, {"N", "K"}, {"N", "M"}, 
+	      {"N", "I"}, {"O", "K"}, {"P", "L"}
+	    };
+	    return graphFromEdgelist(edges, true);
+	  }
+  
+  //TODO - implement graph1 from PDF using graphFromEdgeList()
+  
 
   public static void main(String[] args) {
   
-    System.out.println("Graph 0");
-    System.out.println(Graph0());
-
+	  //print graph0
+	System.out.println("Graph 0");
+	System.out.println(Graph0());
+	
+	//print graph1
+	System.out.println("Graph 1");
+	System.out.println(Graph1());
+	
+	//print graph2
+	
   }
 
 }
