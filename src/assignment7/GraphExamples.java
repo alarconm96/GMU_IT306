@@ -68,12 +68,28 @@ public class GraphExamples {
 	    return graphFromEdgelist(edges, true);
 	  }
   
-  //TODO - implement graph1 from PDF using graphFromEdgeList()
-  
+  //creates graph2 and returns edgelist
+  public static Graph<String,Integer> Graph2() {
+	    String[][] edges = {
+	    		{"V0", "V1", "2"},
+	    		{"V0", "V3", "1"},
+	    		{"V1", "V3", "3"},
+	    		{"V1", "V4", "10"},
+	    		{"V2", "V0", "4"},
+	    		{"V2", "V5", "5"},
+	    		{"V3", "V2", "2"},
+	    		{"V3", "V4", "4"},
+	    		{"V3", "V5", "8"},
+	    		{"V3", "V6", "4"},
+	    		{"V4", "V6", "6"},
+	    		{"V6", "V5", "1"}
+	    };
+	    return graphFromEdgelist(edges, true);
+	  }
 
   public static void main(String[] args) {
   
-	  //print graph0
+	//print graph0
 	System.out.println("Graph 0");
 	System.out.println(Graph0());
 	
@@ -82,7 +98,8 @@ public class GraphExamples {
 	System.out.println(Graph1());
 	
 	//print graph2
-	
+	System.out.println("Graph 2");
+	System.out.println(Graph2());
   }
 
 }
