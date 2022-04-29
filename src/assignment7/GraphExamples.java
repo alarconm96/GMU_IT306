@@ -86,20 +86,32 @@ public class GraphExamples {
 	    };
 	    return graphFromEdgelist(edges, true);
 	  }
+  
+  
 
   public static void main(String[] args) {
   
+	  //graph objects
+	  Graph<String, Integer> g0 = Graph0();
+	  Graph<String, Integer> g1 = Graph1();
+	  Graph<String, Integer> g2 = Graph2();
+	  
 	//print graph0
 	System.out.println("Graph 0");
-	System.out.println(Graph0());
+	System.out.println(g0);
 	
 	//print graph1
 	System.out.println("Graph 1");
-	System.out.println(Graph1());
+	System.out.println(g1);
 	
 	//print graph2
 	System.out.println("Graph 2");
-	System.out.println(Graph2());
+	System.out.println(g2);
+	
+	//DFS for graph1
+	System.out.println("DFS Traversal for Graph 1");
+	//TODO - determine how to access refs to vertices
+	
   }
 
 }
