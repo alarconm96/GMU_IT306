@@ -1,4 +1,8 @@
 package assignment7;
+
+import java.util.Iterator;
+import java.util.Stack;
+
 /**
  * An implementation for a graph structure using an adjacency map for each vertex.
  *
@@ -141,6 +145,45 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     vertices.remove(vert.getPosition());
     vert.setPosition(null);             // invalidates the vertex
   }
+  
+  //TODO - maintain method
+  /*Traverse Graph using DFS from vertex v to u*/
+  public void pathDFS(Vertex<V> v, Vertex<V> u) {
+	  //set all edges and vertices to UNEXPLORED
+	  for (Iterator<?> iterator = vertices().iterator(); iterator.hasNext();) {
+		InnerVertex<?> vertex = (InnerVertex<?>) iterator.next();
+		vertex.setLabel("UNEXPLORED");
+	  }
+	  for (Iterator<?> iterator = edges().iterator(); iterator.hasNext();) {
+			InnerEdge<?> edge = (InnerEdge<?>) iterator.next();
+			edge.setLabel("UNEXPLORED");
+	  }
+	  
+	  //traverse using DFS and label edges/vertices
+	  Stack<Vertex<V>> s = new Stack<>();
+	  ((AdjacencyMapGraph<V, E>.InnerVertex<V>) v).setLabel("VISITED");
+	  s.push(v);
+	  if (v.equals(u)) {
+		for (Iterator iterator = s.iterator(); iterator.hasNext();) {
+			InnerVertex<?> vertex = (InnerVertex<?>) iterator.next();
+			System.out.print(vertex + " ");
+		}
+	  }
+	  InnerVertex<V> w = null;
+	  for (Iterator iterator = outgoingEdges((Vertex<V>) v).iterator(); iterator.hasNext();) {
+		Edge<E> edge = (Edge<E>) iterator.next();
+		if (((AdjacencyMapGraph<V, E>.InnerEdge<E>) edge).getLabel().equals("UNEXPLORED")) {
+			w = (AdjacencyMapGraph<V, E>.InnerVertex<V>) opposite(v, edge);
+		}
+		if (w.geLabel() == "UNEXPLORED") {
+			((AdjacencyMapGraph<V, E>.InnerVertex<V>) edge).setLabel("DISCOVERY");
+			pathDFS(w, u);
+		}else {
+			((AdjacencyMapGraph<V, E>.InnerVertex<V>) edge).setLabel("BACK");
+		}
+	}
+	  System.out.print(s.pop() + " ");
+  }
 
   @SuppressWarnings({"unchecked"})
   /** Removes an edge from the graph. */
@@ -177,6 +220,7 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     private V element;
     private Position<Vertex<V>> pos;
     private Map<Vertex<V>, Edge<E>> outgoing, incoming;
+    private String label = "";
 
     /** Constructs a new InnerVertex instance storing the given element. */
     public InnerVertex(V elem, boolean graphIsDirected) {
@@ -207,6 +251,12 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
 
     /** Returns reference to the underlying map of incoming edges. */
     public Map<Vertex<V>, Edge<E>> getIncoming() { return incoming; }
+    
+    /*Returns vertex label for traversals*/
+    public String geLabel() {return this.label;}
+    
+    /*Sets vertex label for traversals*/
+    public void setLabel(String label) {this.label = label;}
   } //------------ end of InnerVertex class ------------
 
   //---------------- nested InnerEdge class ----------------
@@ -215,6 +265,7 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     private E element;
     private Position<Edge<E>> pos;
     private Vertex<V>[] endpoints;
+    private String label = "";
 
     @SuppressWarnings({"unchecked"})
     /** Constructs InnerEdge instance from u to v, storing the given element. */
@@ -239,6 +290,12 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
 
     /** Returns the position of this edge within the graph's vertex list. */
     public Position<Edge<E>> getPosition() { return pos; }
+    
+    /*Returns edge label for traversals*/
+    public String getLabel() {return this.label;}
+    
+    /*Sets edge label for traversals*/
+    public void setLabel(String label) {this.label = label;}
   } //------------ end of InnerEdge class ------------
 
   /**
