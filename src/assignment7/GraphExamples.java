@@ -57,15 +57,14 @@ public class GraphExamples {
   //creates graph1 and returns edgelist
   public static Graph<String,Integer> Graph1() {
 	    String[][] edges = {
-	      {"A", "E"}, {"A", "F"}, {"A", "B"}, {"B", "A"}, {"B", "F"}, {"B", "C"}, {"C", "B"}, 
-	      {"C", "G"}, {"C", "D"}, {"D", "C"}, {"D", "G"}, {"D", "H"}, {"E", "A"}, {"E", "F"}, 
-	      {"E", "I"}, {"F", "E"}, {"F", "I"}, {"F", "A"}, {"F", "B"}, {"G", "C"}, {"G", "D"}, {"G", "J"}, {"G", "K"}, {"G", "L"}, 
-	      {"H", "D"}, {"H", "L"}, {"I", "E"}, {"I", "F"}, {"I", "J"}, {"I", "M"}, {"I", "N"}, 
-	      {"J", "I"}, {"J", "G"}, {"J", "K"}, {"K", "J"}, {"K", "G"}, {"K", "N"}, {"K", "O"}, 
-	      {"L", "G"}, {"L", "H"}, {"L", "P"}, {"M", "I"}, {"M", "N"}, {"N", "K"}, {"N", "M"}, 
-	      {"N", "I"}, {"O", "K"}, {"P", "L"}
+	      {"A", "E"}, {"A", "F"}, {"A", "B"}, {"B", "F"}, {"B", "C"}, 
+	      {"C", "G"}, {"C", "D"}, {"D", "G"}, {"D", "H"}, {"E", "F"}, 
+	      {"E", "I"}, {"F", "I"}, {"G", "J"}, {"G", "K"}, {"G", "L"}, 
+	      {"H", "L"}, {"I", "J"}, {"I", "M"}, {"I", "N"}, 
+	      {"J", "K"}, {"K", "N"}, {"K", "O"}, 
+	      {"L", "P"}, {"M", "N"}
 	    };
-	    return graphFromEdgelist(edges, true);
+	    return graphFromEdgelist(edges, false);
 	  }
   
   //creates graph2 and returns edgelist
@@ -96,6 +95,7 @@ public class GraphExamples {
 	  Graph<String, Integer> g1 = Graph1();
 	  Graph<String, Integer> g2 = Graph2();
 	  
+	  
 	//print graph0
 	System.out.println("Graph 0");
 	System.out.println(g0);
@@ -109,8 +109,10 @@ public class GraphExamples {
 	System.out.println(g2);
 	
 	//DFS for graph1
-	System.out.println("DFS Traversal for Graph 1");
-	//TODO - determine how to access refs to vertices
+	System.out.println("DFS Traversal for Graph 1 from Vertex A to Vertex O");
+	g1.pathDFS();
+	
+	//TODO - Dijkstra's algorithm
 	
   }
 
