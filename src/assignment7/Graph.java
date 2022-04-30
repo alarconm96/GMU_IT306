@@ -1,4 +1,7 @@
 package assignment7;
+
+import java.util.Deque;
+
 /**
  * An interface for a graph structure. A graph can be declared as either directed or undirected.
  * In the case of an undirected graph, methods outgoingEdges and incomingEdges return the same collection,
@@ -10,6 +13,8 @@ package assignment7;
  */
 public interface Graph<V,E> {
 
+	
+	
   /** Returns the number of vertices of the graph */
   int numVertices();
 
@@ -70,6 +75,8 @@ public interface Graph<V,E> {
 
   /** Inserts and returns a new vertex with the given element. */
   Vertex<V> insertVertex(V element);
+  
+  Vertex<V> getVertex(V element);
 
   /**
    * Inserts and returns a new edge between vertices u and v, storing given element.
@@ -83,4 +90,7 @@ public interface Graph<V,E> {
 
   /** Removes an edge from the graph. */
   void removeEdge(Edge<E> e) throws IllegalArgumentException;
+
+void pathDFS();
+void pathDFS(Deque<Vertex<V>> s, Vertex<V> v, Vertex<V> u);
 }
