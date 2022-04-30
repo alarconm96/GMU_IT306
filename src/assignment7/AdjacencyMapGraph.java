@@ -1,6 +1,8 @@
 package assignment7;
 
+import java.util.Deque;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -32,6 +34,18 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
 
   /** Returns the edges of the graph as an iterable collection */
   public Iterable<Edge<E>> edges() { return edges; }
+  
+  /*Finds and returns vertex with given element*/
+  public Vertex<V> getVertex(V element) {
+	  Vertex<V> v = null;
+	  for (Iterator iterator = vertices.iterator(); iterator.hasNext();) {
+		Vertex<V> vertex = (Vertex<V>) iterator.next();
+		if (vertex.getElement() == element) {
+			v = vertex;
+		}
+	}
+	  return v;
+  }
 
   /**
    * Returns the number of edges for which vertex v is the origin.
@@ -146,44 +160,62 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     vert.setPosition(null);             // invalidates the vertex
   }
   
-  //TODO - maintain method
-  /*Traverse Graph using DFS from vertex v to u*/
-  public void pathDFS(Vertex<V> v, Vertex<V> u) {
-	  //set all edges and vertices to UNEXPLORED
-	  for (Iterator<?> iterator = vertices().iterator(); iterator.hasNext();) {
-		InnerVertex<?> vertex = (InnerVertex<?>) iterator.next();
-		vertex.setLabel("UNEXPLORED");
-	  }
-	  for (Iterator<?> iterator = edges().iterator(); iterator.hasNext();) {
-			InnerEdge<?> edge = (InnerEdge<?>) iterator.next();
+  public void pathDFS() {
+		//set all labels to UNEXPLORED
+		  Vertex<V> v = null;
+		  Vertex<V> u = null;
+		  for (Iterator iterator = vertices.iterator(); iterator.hasNext();) {
+			Vertex<V> vertex = (Vertex<V>) iterator.next();
+			vertex.setLabel("UNEXPLORED");
+			if (vertex.getElement().equals("A")) {
+				v = vertex;
+			}
+			if (vertex.getElement().equals("O")) {
+				u = vertex;
+			}
+		}
+		  for (Iterator iterator = edges.iterator(); iterator.hasNext();) {
+			Edge<E> edge = (Edge<E>) iterator.next();
 			edge.setLabel("UNEXPLORED");
+		}
+		  Deque<Vertex<V>> s = new LinkedList<>();
+		  pathDFS(s, v, u);
 	  }
-	  
-	  //traverse using DFS and label edges/vertices
-	  Stack<Vertex<V>> s = new Stack<>();
-	  ((AdjacencyMapGraph<V, E>.InnerVertex<V>) v).setLabel("VISITED");
-	  s.push(v);
-	  if (v.equals(u)) {
-		for (Iterator iterator = s.iterator(); iterator.hasNext();) {
-			InnerVertex<?> vertex = (InnerVertex<?>) iterator.next();
-			System.out.print(vertex + " ");
+	  //TODO - DFS method
+	  /*Traverse Graph using DFS from vertex v to u*/
+	  public void pathDFS(Deque<Vertex<V>> s, Vertex<V> v, Vertex<V> u) {
+		  //TODO - DFS traverse
+		  v.setLabel("VISITED");
+		  s.push(v);
+		  if (v.equals(u)) {
+			  Deque<Vertex<V>> tmp = new LinkedList<>();
+			  for (Vertex<V> vertex : s) {
+				tmp.push(vertex);
+			}
+			  for (Vertex<V> vertex : tmp) {
+				if (vertex.getElement().equals("O")) {
+					System.out.println(vertex.getElement());
+				} else {
+					System.out.print(vertex.getElement() + " -> ");
+				}
+			}
 		}
+		  for (Iterator iterator = outgoingEdges(v).iterator(); iterator.hasNext();) {
+			Edge<E> edge = (Edge<E>) iterator.next();
+			if (edge.getLabel().equals("UNEXPLORED")) {
+				Vertex<V> w = opposite(v, edge);
+				if (w.getLabel().equals("UNEXPLORED")) {
+					edge.setLabel("DISCOVERY");
+					pathDFS(s, w, u);
+				}else {
+					edge.setLabel("BACK");
+				}
+			}
+		}
+		  s.pop();
 	  }
-	  InnerVertex<V> w = null;
-	  for (Iterator iterator = outgoingEdges((Vertex<V>) v).iterator(); iterator.hasNext();) {
-		Edge<E> edge = (Edge<E>) iterator.next();
-		if (((AdjacencyMapGraph<V, E>.InnerEdge<E>) edge).getLabel().equals("UNEXPLORED")) {
-			w = (AdjacencyMapGraph<V, E>.InnerVertex<V>) opposite(v, edge);
-		}
-		if (w.geLabel() == "UNEXPLORED") {
-			((AdjacencyMapGraph<V, E>.InnerVertex<V>) edge).setLabel("DISCOVERY");
-			pathDFS(w, u);
-		}else {
-			((AdjacencyMapGraph<V, E>.InnerVertex<V>) edge).setLabel("BACK");
-		}
-	}
-	  System.out.print(s.pop() + " ");
-  }
+  
+  
 
   @SuppressWarnings({"unchecked"})
   /** Removes an edge from the graph. */
@@ -253,10 +285,12 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     public Map<Vertex<V>, Edge<E>> getIncoming() { return incoming; }
     
     /*Returns vertex label for traversals*/
-    public String geLabel() {return this.label;}
+    public String getLabel() {return this.label;}
     
     /*Sets vertex label for traversals*/
     public void setLabel(String label) {this.label = label;}
+
+	
   } //------------ end of InnerVertex class ------------
 
   //---------------- nested InnerEdge class ----------------
