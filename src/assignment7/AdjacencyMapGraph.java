@@ -1,8 +1,16 @@
+/*
+ * Marco Alarcon
+ * IT306-002
+ * May 4, 2022
+ * Assignment 7
+ * */
 package assignment7;
 
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 /**
@@ -160,16 +168,22 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     vert.setPosition(null);             // invalidates the vertex
   }
   
+  /**Depth First Search - set all vertices/edges to UNEXPLORED, 
+   * initialize start/destination vertices, 
+   * and call parameterized pathDFS method using those vertices*/
   public void pathDFS() {
-		//set all labels to UNEXPLORED
+		//declare start and destination vertices and sets them to null temporarily
 		  Vertex<V> v = null;
 		  Vertex<V> u = null;
+		//set all labels to UNEXPLORED
 		  for (Iterator iterator = vertices.iterator(); iterator.hasNext();) {
 			Vertex<V> vertex = (Vertex<V>) iterator.next();
 			vertex.setLabel("UNEXPLORED");
+			//chooses start vertex
 			if (vertex.getElement().equals("A")) {
 				v = vertex;
 			}
+			//chooses destination vertex
 			if (vertex.getElement().equals("O")) {
 				u = vertex;
 			}
@@ -178,20 +192,25 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
 			Edge<E> edge = (Edge<E>) iterator.next();
 			edge.setLabel("UNEXPLORED");
 		}
+		  //instantiates stack list to be passed into pathDFS method
 		  Deque<Vertex<V>> s = new LinkedList<>();
+		  //initiates recursive pathDFS call
 		  pathDFS(s, v, u);
 	  }
-	  //TODO - DFS method
-	  /*Traverse Graph using DFS from vertex v to u*/
+  
+	  /**Traverse Graph recursively using DFS from vertex v to u*/
 	  public void pathDFS(Deque<Vertex<V>> s, Vertex<V> v, Vertex<V> u) {
-		  //TODO - DFS traverse
+		  //sets label of current vertex to VISITED and adds to stack
 		  v.setLabel("VISITED");
 		  s.push(v);
+		  //complete DFS traversal once destination vertex is reached
 		  if (v.equals(u)) {
+			  //new tmp stack to receive base stack contents in reverse
 			  Deque<Vertex<V>> tmp = new LinkedList<>();
 			  for (Vertex<V> vertex : s) {
 				tmp.push(vertex);
 			}
+			  //print out stack as DFS path
 			  for (Vertex<V> vertex : tmp) {
 				if (vertex.getElement().equals("O")) {
 					System.out.println(vertex.getElement());
@@ -200,6 +219,7 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
 				}
 			}
 		}
+		  //check unexplored edges and label as DISCOVERY or BACK accordingly
 		  for (Iterator iterator = outgoingEdges(v).iterator(); iterator.hasNext();) {
 			Edge<E> edge = (Edge<E>) iterator.next();
 			if (edge.getLabel().equals("UNEXPLORED")) {
@@ -212,7 +232,57 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
 				}
 			}
 		}
+		  //pop vertices that lead back to origin
 		  s.pop();
+	  }
+	  
+	  
+	  /**Dijkstra's algorithm to print out shortest path from source to each possible vertex*/
+	  public void dijkstra() {
+		//custom comparator to sort PriorityQueue vertices by weight in ascending order
+		  Comparator<Vertex<V>> customComp = new Comparator<Vertex<V>>() {
+			  @Override
+			  public int compare(Vertex<V> v1, Vertex<V> v2) {
+				  return v1.getWeight() - v2.getWeight();
+			  }
+	  	  };
+		  PriorityQueue<Vertex<V>> pq = new PriorityQueue<>(numVertices(), customComp);
+		  //instantiate source vertex and set to V0
+		  Vertex<V> source = null;
+		  for (Iterator iterator = vertices.iterator(); iterator.hasNext();) {
+			Vertex<V> vertex = (Vertex<V>) iterator.next();
+			if (vertex.getElement().equals("V0")) {
+				source = vertex;
+			}
+			pq.add(vertex);
+		  }	
+		  //source vertex weight set to zero
+		  source.setWeight(0);
+		  while (!pq.isEmpty()) {
+			Vertex<V> u = pq.poll();
+			//check weight of all vertices adjacent to u that are in PriorityQueue
+			for (Iterator iterator = outgoingEdges(u).iterator(); iterator.hasNext();) {
+				Edge<E> edge = (Edge<E>) iterator.next();
+				Vertex<V> adjVertex = opposite(u, edge);
+				if (pq.contains(adjVertex)) {
+					//weight relaxation
+					if (u.getWeight() + (int) edge.getElement() < adjVertex.getWeight()) {
+						adjVertex.setWeight(u.getWeight() + (int) edge.getElement());
+						//update adjVertex element in PriorityQueue to new weight
+						pq.remove(adjVertex);
+						pq.add(adjVertex);
+					}
+				}
+				
+			}
+		  }
+		  //print all possible paths from source
+		  for (Iterator iterator = vertices.iterator(); iterator.hasNext();) {
+			Vertex<V> vertex = (Vertex<V>) iterator.next();
+			if (!vertex.equals(source)) {
+				System.out.printf("Shortest path from V0 to %s: %d%n", vertex.getElement(), vertex.getWeight());
+			}
+		}
 	  }
   
   
@@ -253,6 +323,7 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     private Position<Vertex<V>> pos;
     private Map<Vertex<V>, Edge<E>> outgoing, incoming;
     private String label = "";
+    private int weight = Integer.MAX_VALUE;
 
     /** Constructs a new InnerVertex instance storing the given element. */
     public InnerVertex(V elem, boolean graphIsDirected) {
@@ -289,6 +360,16 @@ public class AdjacencyMapGraph<V,E> implements Graph<V,E> {
     
     /*Sets vertex label for traversals*/
     public void setLabel(String label) {this.label = label;}
+    
+    /*Gets vertex weight for Dijkstra's Algorithm*/
+    public int getWeight() {
+    	return this.weight;
+    }
+    
+    /*Sets vertex weight for Dijkstra's Algorithm*/
+    public void setWeight(int weight) {
+    	this.weight = weight;
+    }
 
 	
   } //------------ end of InnerVertex class ------------
