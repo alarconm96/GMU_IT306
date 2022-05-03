@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT306-002
+ * May 4, 2022
+ * Assignment 7
+ * */
 package assignment7;
 
 import java.util.Deque;
@@ -91,6 +97,8 @@ public interface Graph<V,E> {
   /** Removes an edge from the graph. */
   void removeEdge(Edge<E> e) throws IllegalArgumentException;
 
+  //method signatures used for assignment
 void pathDFS();
 void pathDFS(Deque<Vertex<V>> s, Vertex<V> v, Vertex<V> u);
+void dijkstra();
 }
