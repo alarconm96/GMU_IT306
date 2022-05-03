@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT306-002
+ * May 4, 2022
+ * Assignment 7
+ * */
 package assignment7;
 import java.util.ArrayList;
 import java.util.Random;

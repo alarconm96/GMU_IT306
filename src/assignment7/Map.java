@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT306-002
+ * May 4, 2022
+ * Assignment 7
+ * */
 package assignment7;
 /**
  * An interface for an associative map which binds a key uniquely to a value.
