@@ -1,3 +1,9 @@
+/*
+ * Marco Alarcon
+ * IT306-002
+ * May 4, 2022
+ * Assignment 7
+ * */
 package assignment7;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -95,7 +101,10 @@ public class GraphExamples {
 	  Graph<String, Integer> g1 = Graph1();
 	  Graph<String, Integer> g2 = Graph2();
 	  
-	  
+	  //PART 1
+	  System.out.println("==============================================================");
+	  System.out.println("PART 1: GRAPH IMPLEMENTATION");
+	  System.out.println("All graph details printed below\n");
 	//print graph0
 	System.out.println("Graph 0");
 	System.out.println(g0);
@@ -106,14 +115,25 @@ public class GraphExamples {
 	
 	//print graph2
 	System.out.println("Graph 2");
-	System.out.println(g2);
+	System.out.print(g2);
+	System.out.println("==============================================================\n");
 	
+	//PART 2
+	System.out.println("==============================================================");
+	  System.out.println("PART 2: GRAPH TRAVERSAL");
+	  System.out.println("DFS Traversal for Graph 1 from Vertex A to Vertex O\n");
 	//DFS for graph1
-	System.out.println("DFS Traversal for Graph 1 from Vertex A to Vertex O");
 	g1.pathDFS();
+	System.out.println("==============================================================\n");
 	
-	//TODO - Dijkstra's algorithm
-	
+	//PART 3
+	System.out.println("==============================================================");
+	  System.out.println("PART 3: SHORTEST PATH FINDING");
+	  System.out.println("All shortest paths from source V0 using Dijkstra's Algorithm");
+	  System.out.println();
+	//Dijkstra's algorithm
+	g2.dijkstra();
+	System.out.println("==============================================================");
   }
 
 }
